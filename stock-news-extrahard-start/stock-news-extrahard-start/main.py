@@ -41,12 +41,12 @@ def get_stock():
          stock_change = recent_stock_close / previous_stock_close
          stock_change = 1 - stock_change
          stock_percentage_change = round(stock_change*100,2)
-         return stock_percentage_change, True
-    elif recent_stock_close / previous_stock_close >= 1:
+         return stock_percentage_change, False
+    else:
         stock_change = recent_stock_close / previous_stock_close
         stock_change-=1
         stock_percentage_change = round(stock_change*100,2)
-        return stock_percentage_change, False
+        return stock_percentage_change, True
 
 def get_news():
     today = datetime.date.today()
@@ -84,8 +84,8 @@ def send_message():
                 body=f"{STOCK} 🔼 {stock_price_change}%. "
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+14155238886",
-                to="whatsapp:14129089216"
+                from_="whatsapp:+1XXXXXXXXXX",
+                to="whatsapp:1XXXXXXXXXX"
             )
     elif not increase:
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -94,10 +94,9 @@ def send_message():
                 body=f"{STOCK} 🔻 {stock_price_change}%."
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+14155238886",
-                to="whatsapp:14129089216"
+                from_="whatsapp:+1XXXXXXXXX",
+                to="whatsapp:1XXXXXXXXX"
             )
-
 
 send_message()
 
