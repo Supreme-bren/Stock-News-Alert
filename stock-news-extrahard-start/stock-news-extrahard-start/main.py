@@ -1,9 +1,9 @@
 import requests
 import os
-import datetime
 from dotenv import load_dotenv
 from twilio.rest import Client
 load_dotenv()
+
 API_KEY_STOCK = os.environ.get("API_KEY_STOCK")
 API_KEY_NEWS = os.environ.get("API_KEY_NEWS")
 ACCOUNT_SID = os.environ.get("ACCOUNT_SID")
@@ -23,7 +23,6 @@ def get_stock():
     stock_response = requests.get(url=stock_endpoint, params=stock_parmas)
     stock_response.raise_for_status()
     stock_data = stock_response.json()
-    print(stock_data)
     daily_stock_data = stock_data["Time Series (Daily)"]
     daily_stock_data = [value for value in daily_stock_data.values()]
 
@@ -34,8 +33,6 @@ def get_stock():
             previous_stock_close = daily_stock_data[i]["4. close"]
     recent_stock_close = float(recent_stock_close)
     previous_stock_close = float(previous_stock_close)
-    print(recent_stock_close)
-    print(previous_stock_close)
 
     if recent_stock_close / previous_stock_close < 1:
          stock_change = recent_stock_close / previous_stock_close
@@ -49,13 +46,9 @@ def get_stock():
         return stock_percentage_change, True
 
 def get_news():
-    today = datetime.date.today()
-    yesterday = today - datetime.timedelta(days=1)
     news_endpoint = "https://newsapi.org/v2/everything"
     news_params = {
         "qInTitle": COMPANY_NAME,
-        "from": yesterday,
-        "to": today,
         "sortBy": "popularity",
         "apiKey": API_KEY_NEWS
 
@@ -84,8 +77,8 @@ def send_message():
                 body=f"{STOCK} 🔼 {stock_price_change}%. "
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+1XXXXXXXXXX",
-                to="whatsapp:1XXXXXXXXXX"
+                from_="whatsapp:+1XXXXXXXXX",
+                to="whatsapp:1XXXXXXXXX"
             )
     elif not increase:
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -94,8 +87,8 @@ def send_message():
                 body=f"{STOCK} 🔻 {stock_price_change}%."
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+1XXXXXXXXX",
-                to="whatsapp:1XXXXXXXXX"
+                from_="whatsapp:+1XXXXXXXXXXX",
+                to="whatsapp:1XXXXXXXX"
             )
 
 send_message()
