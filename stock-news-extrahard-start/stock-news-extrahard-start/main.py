@@ -49,7 +49,7 @@ def get_news():
     news_endpoint = "https://newsapi.org/v2/everything"
     news_params = {
         "qInTitle": COMPANY_NAME,
-        "sortBy": "popularity",
+        "sortBy": "relevancy",
         "apiKey": API_KEY_NEWS
 
     }
@@ -77,8 +77,8 @@ def send_message():
                 body=f"{STOCK} 🔼 {stock_price_change}%. "
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+1XXXXXXXXX",
-                to="whatsapp:1XXXXXXXXX"
+                from_="whatsapp:+1XXXXXXXXXX",
+                to="whatsapp:1XXXXXXXXXX"
             )
     elif not increase:
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -87,8 +87,8 @@ def send_message():
                 body=f"{STOCK} 🔻 {stock_price_change}%."
                      f"Headline: {news_articles[i]["title"]}"
                      f"\nBrief:{news_articles[i]["description"]}",
-                from_="whatsapp:+1XXXXXXXXXXX",
-                to="whatsapp:1XXXXXXXX"
+                from_="whatsapp:+1XXXXXXXXXX",
+                to="whatsapp:1XXXXXXXXX"
             )
 
 send_message()
